@@ -1,0 +1,90 @@
+<!-- <ol class="page-breadcrumb">
+  <li>
+    <mp-link title="Home" url="/">Home</mp-link>
+  </li>
+  <li class="active">
+    <mp-label iri="[[this]]"></mp-label>
+  </li>
+</ol> -->
+
+<div class="page" style="padding-top: 0">
+  <div class="page__hero">
+    <div class="container">
+      <img src="/assets/img/bg_midjourney.png" alt="Network background" class="img-blend-in" height="100" />
+      <h1>
+        <!-- Loading query from the triple store, then executing it in server side template -->
+        <!-- <semantic-query style="display: inline;" query='[[singleValueFromSelect "select ?cat_query where {?s a crmdig:D14_Software ; crm:P1_is_identified_by [a crm:E41_Appellation ; crm:P190_has_symbolic_content ?appellation] ; crm:P190_has_symbolic_content ?cat_query . filter (?appellation = 'cat_query')}"]]'></semantic-query> -->
+        
+        <img src="/assets/img/CLS_INFRA_Icon2.png" alt="CLSInfra Logo" height="100" />CLSCor Corpus Exploration Platform
+      </h1>
+    </div>
+  </div>
+  <div class="container page-section">
+    <bs-row class="row-center">
+      <bs-col md="8">
+        <h2>About CLSCor</h2>
+        <p>
+          The digital age offers challenges and opportunities for completing research on Europe’s multilingual and
+          interconnected literary heritage. At present, the landscape of literary data is diverse and fragmented. Even
+          though many resources are currently available in digital libraries, a lack of standardisation hinders their
+          access and reuse. The EU-funded <a href="https://clsinfra.io/"><b>CLS INFRA project</b></a> will help to build
+          the shared and sustainable infrastructure needed to undertake literary studies in the digital age. The CLSCor
+          Corpus Exploration Platform enables users to explore metadata on literary corpora.
+          <semantic-link iri="app:About">Read more...</semantic-link>
+        </p>
+        
+      </bs-col>
+      <!-- <bs-col>
+        <div class="grid-demo">
+          <h3>Explore</h3>
+          <p>Following are various ways to explore the data in the CLSCor Catalogue:</p>
+          <ul>
+            <li><mp-link url="/sparql">SPARQL Interface</mp-link></li>
+            <li><semantic-link iri="app:Overview">Overview</semantic-link></li>
+            <li><semantic-link iri="app:Corpora">Corpora</semantic-link></li>
+          </ul>
+        </div>
+      </bs-col> -->
+    </bs-row>
+    <bs-row class="row-center">
+      <bs-col md="8">
+        <h2>Explore</h2>
+        <p>Following are various ways to explore the data in the CLSCor Catalogue:</p>
+        <div class="d-flex flex-wrap" style="gap: 16px">
+          <semantic-link iri="app:Corpora" class="page-section__card">
+            <div>
+              <div class="card-body">
+                <h3 class="card-title">Corpora</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Whole card is clickable</h6>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's content.
+                </p>
+              </div>
+            </div></semantic-link
+          ><semantic-link iri="app:Overview" class="page-section__card">
+            <div>
+              <div class="card-body">
+                <h3 class="card-title">Dataset</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Clickable title</h6>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's content.
+                </p>
+              </div>
+            </div></semantic-link
+          >
+          <mp-link url="/sparql" class="page-section__card"
+            ><div>
+              <div class="card-body">
+                <h3 class="card-title">SPARQL Interface</h3>
+                <h6 class="card-subtitle mb-2 text-muted">Link at the bottom</h6>
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up the bulk of the card's content.
+                </p>
+              </div>
+            </div></mp-link
+          >
+        </div>
+      </bs-col>
+    </bs-row>
+  </div>
+</div>

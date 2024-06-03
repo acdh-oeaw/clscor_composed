@@ -1,0 +1,144 @@
+  <ol class="page-breadcrumb">
+  <li>
+    <mp-link title="Home" url="/">Home</mp-link>
+  </li>
+  <li class="active">Overview</li>
+</ol>
+
+
+<div class="page container">
+  
+  <div class="page__body">
+    <div class="page__header-body" style="width: 100%">
+      <h1>
+        <mp-label iri="[[this]]"></mp-label>
+      </h1>
+      <!--Description -->
+      <p>
+        This is a very useful introductory text regarding our dataset. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+        sit amet pellentesque nisl. Vivamus venenatis, magna a elementum venenatis, nunc tortor vestibulum libero, nec
+        ultricies nibh magna ut nibh. Sed ut mattis nunc, id accumsan libero. Integer ultrices arcu elit, id dignissim
+        ligula pulvinar a. Nam venenatis enim in neque dignissim, id convallis sapien dapibus.
+      </p>
+    </div>
+
+    <!-- <h2>Sources</h2> -->
+
+<!-- deactivated due to abysmal performance of the query, needs revision!
+<semantic-table
+             query="PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT ?g ?cnt ?created ?creator WHERE { {SELECT DISTINCT ?g (COUNT(DISTINCT ?s) as ?cnt) WHERE { GRAPH ?g { ?s ?p ?o . } } GROUP BY ?g }
+  OPTIONAL {?g dct:created ?created; dct:creator ?creator; }
+}" 
+       number-of-displayed-rows="50"
+       column-configuration='[
+               {
+    						"displayName": "Graph", 
+    						"cellTemplate": "{{> graph-link}}" 
+    						},
+               {"displayName":"Count distinct subjects",                
+                "cellTemplate": "{{>linktoclassprovenance}}" 
+               },            
+              {"variableName":"created", "displayName":"Created"},                                    
+              {"variableName":"creator", "displayName":"Creator"}               
+             ]'
+                    >
+        <template id='graph-link'>
+        <semantic-link uri="[[resolvePrefix "Admin:NamedGraphs"]]" urlqueryparam-graph='{{g.value}}'>{{g.value}}</semantic-link>
+        </template>
+             	<template id="linktoclassprovenance" >                
+                 <a href="./acdhu:ClassProvenance?graph={{encodeUriComponent g.value}}">{{cnt.value}}</a>
+                </template>
+
+      </semantic-table>
+  -->
+    
+    <h2> Top ten classes </h2>
+    <div style="max-width: 750px;">
+        <semantic-chart
+    provider="chartjs"
+    type="bar"
+    styles='[{
+      "provider": "chartjs",
+      "style": {
+        "data": {
+          "datasets": [
+            {
+              "backgroundColor": "#159da5aa",
+              "borderColor": "#159da5aa"
+            }
+          ]
+        },
+        "options": {
+            "legend": {
+              "display": false
+            }
+        }
+      }
+    }]'
+    query="SELECT  ?type (count( ?sub) as ?cnt_type )  WHERE {  ?sub a ?type } GROUP BY ?type ORDER BY DESC(?cnt_type) LIMIT 10"
+    sets='[{"dataSetName": "Top ten types", "category": "type", "value": "cnt_type"}]'
+         ></semantic-chart></div>
+
+
+<h2 class="mt-6">Classes</h2>
+<bs-panel header="Search all [[singleValueFromSelect 'SELECT  (COUNT(DISTINCT ?type) AS ?count)  WHERE {  ?sub a ?type }']] used classes" collapsible="true">
+       <!-- <mp-sparql-result-counts id='query-count'
+                                     query="SELECT  DISTINCT ?type  WHERE {  ?sub a ?type }"
+                                     template='{{#if hasLimit}} <bs-alert bs-style="warning">
+                                               Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
+                                               {{else}}<span>Found <b>{{numberOfResults}}</b> distinct (used) classes </span>{{/if}}'>
+            </mp-sparql-result-counts> -->
+    
+            <semantic-table
+             query="SELECT  ?type (count( ?sub) as ?cnt_sub )  WHERE {  ?sub a ?type } GROUP BY ?type ORDER BY DESC(?cnt_sub)"
+             column-configuration='[
+               {"variableName":"type", "displayName":"Class"},                
+              {"variableName":"cnt_sub", "displayName":"Count instances"},                                    
+               {
+    						"displayName": "Class URI", 
+    						"cellTemplate": "<div>{{type.value}}</div>" 
+    						}
+             ]'
+             options='{
+               "showFilter":true
+             }'
+           >
+           </semantic-table>
+</bs-panel>
+ 
+    
+<h2 class="mt-6">Properties</h2>
+    
+<mp-sparql-result-counts id='query-count'
+                                     query="SELECT DISTINCT ?p WHERE {[] ?p []}"
+                                     template='{{#if hasLimit}} <bs-alert bs-style="warning">
+                                               Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
+                                               {{else}}<span>Currently <b>{{numberOfResults}}</b> distinct properties in use</span>{{/if}}'>
+            </mp-sparql-result-counts>    
+
+<semantic-table
+             query=" SELECT ?p (COUNT(?p) as ?pCount)
+                      WHERE {[] ?p []}
+                      GROUP BY ?p
+                    ORDER BY DESC(?pCount)
+                    "
+             column-configuration='[
+               {"variableName":"p", "displayName":"Property"}, 
+               {"variableName":"pCount", "displayName":"Count of triples"}
+             ]'
+             options='{
+               "showFilter":true
+             }'
+           >
+            
+          
+    
+           </semantic-table>
+      
+    
+  </div>
+  
+</div>
+
