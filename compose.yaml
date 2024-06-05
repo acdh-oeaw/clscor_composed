@@ -45,8 +45,6 @@ services:
     mem_reservation: 8g
     ports:
       - "10215:8080"
-    volumes:
-     - ./data/blazegraph/:/blazegraph-data
     logging:
      driver: json-file
      options:
