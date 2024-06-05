@@ -24,11 +24,12 @@ services:
         -Dconfig.storage.runtime.mutable=true
         -Dlog4j.configurationFile=classpath:org/researchspace/logging/log4j2.xml
         -Dconfig.storage.runtime.root=/custom-app/        
-    volumes:
-       - ./rs-customisation/custom-app/:/custom-app
-       - ./data/researchspace/data/images:/images:rw
-       - ./data/researchspace/data/tmp:/tmp-data:rw
-       - ./data/researchspace/runtime-data:/runtime-data
+    # uncomment if data should be persistable on host
+    #volumes:
+    #   - ./rs-customisation/custom-app/:/custom-app/
+    #   - ./data/researchspace/data/images/:/images/:rw
+    #   - ./data/researchspace/data/tmp/:/tmp-data/:rw
+    #   - ./data/researchspace/runtime-data/:/runtime-data/
     depends_on:
       - blazegraph
     logging:
@@ -45,6 +46,9 @@ services:
     mem_reservation: 8g
     ports:
       - "10215:8080"
+    # uncomment if data should be persistable on host
+    #volumes:
+    # - ./data/blazegraph/:/blazegraph-data
     logging:
      driver: json-file
      options:
