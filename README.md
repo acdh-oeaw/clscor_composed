@@ -1,7 +1,7 @@
 
 # CLSCOR ResearchSpace instance, docker composed
 
-This instance is a read-only copy of the CLSCOR production instance, meant as a playground.
+This instance is a read-only local copy of the CLSCOR production instance, meant as a playground.
 
 ## how to run
 
