@@ -29,7 +29,7 @@ docker compose up
 compose`.)
 
 After roughly 10-20 seconds, open your browser and go to http://localhost:10214/ , log in with user:
-`admin` and password `admin`.
+`admin` and password: `admin`.
 
 Everything is local and read-only, so nothing can be broken. 
 
