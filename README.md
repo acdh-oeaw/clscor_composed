@@ -12,7 +12,7 @@ git clone https://github.com/acdh-oeaw/clscor_composed__ts-vienna-2024.git
 
 go into directory:
 ```
-cd clscor_composed
+cd clscor_composed__ts-vienna-2024
 ```
 
 build: 
