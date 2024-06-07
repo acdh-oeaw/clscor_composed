@@ -7,7 +7,7 @@ This instance is a read-only local copy of the CLSCOR production instance, meant
 
 clone:
 ```
-git clone https://github.com/acdh-oeaw/clscor_composed.git
+git clone https://github.com/acdh-oeaw/clscor_composed__ts-vienna-2024.git
 ```
 
 go into directory:
