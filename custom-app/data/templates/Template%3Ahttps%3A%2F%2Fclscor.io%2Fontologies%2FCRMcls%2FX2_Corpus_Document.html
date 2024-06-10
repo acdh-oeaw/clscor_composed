@@ -28,22 +28,23 @@
       [[> Template:X2Header]]
     </div>
     <div class="page__body">
-        [[#if (ask "ASK {SELECT * WHERE {?? lrm:R4_embodies/lrm:R17i_was_created_by/crm:P14_carried_out_by ?author} }")]]
+        [[#if (ask "ASK {SELECT * WHERE {?? lrm:R4_embodies/(lrm:R17i_was_created_by|^lrm:R17_created)/(^crm:P14i_performed|crm:P14_carried_out_by) ?author} }")]]
         <h2 style="display: flex; gap: 15px; align-items: center;"><span>Author</span>
         </h2>
         <div class="home-page__grid author__grid mt-3">
           <semantic-query 
-            query="SELECT DISTINCT ?actor (COUNT(?otherDocument) as ?count)
+            query="SELECT DISTINCT ?actor (COUNT(distinct ?otherDocument) as ?count)
             WHERE {
               ?? lrm:R4_embodies ?expression .
-              ?expression lrm:R17i_was_created_by ?creation.
-              ?actor crm:P14i_performed ?creation.
+              ?expression lrm:R17i_was_created_by|^lrm:R17_created ?creation.
+              ?actor crm:P14i_performed|^crm:P14_carried_out_by ?creation.
 
               ?? lrm:R71i_is_part_of ?corpus.
               ?otherDocument lrm:R71i_is_part_of ?corpus;
                   lrm:R4_embodies ?otherExpression .
-              ?otherExpression lrm:R17i_was_created_by ?otherCreation.
-              ?actor crm:P14i_performed ?otherCreation.
+              ?otherExpression lrm:R17i_was_created_by|^lrm:R17_created ?otherCreation.
+              ?actor crm:P14i_performed|^crm:P14_carried_out_by ?otherCreation.
+              ?actor a crm:E39_Actor.
             }
             GROUP BY ?actor
                   " 
@@ -71,11 +72,36 @@
         <bs-tab event-key="1" class="tab-ontodia" title="Knowledge Graph">
           <ontodia id='ontodia' hide-toolbar=true hide-panels=true hide-scroll-bars=true hide-navigation-confirmation=true auto-zoom=true settings=nostats  accept-blank-nodes="true"
               query="
-                  CONSTRUCT
-                  WHERE {
+                  CONSTRUCT 
+                  {
+                    ?? lrm:R71i_is_part_of ?corpus.
                     ?? lrm:R4_embodies ?expression .
                     ?expression lrm:R17i_was_created_by ?creation.
                     ?actor crm:P14i_performed ?creation.
+                    ?expression lrm:R4i_is_embodied_in ?manifestation.
+                    ?itemProduction lrm:R27_materialized ?manifestation;
+                      crm:P4_has_time-span ?dateNode.
+                  }
+                  WHERE {
+                    ?? ^lrm:R4i_is_embodied_in|lrm:R4_embodies ?expression .
+                    ?? lrm:R71i_is_part_of|lrm:R71_has_part|^crm:P148_has_component|crm:P148i_is_component_of ?corpus.
+                    ?corpus a crmcls:X1_Corpus.
+                    OPTIONAL {
+                      ?expression ^lrm:R17_created|lrm:R17i_was_created_by ?creation.
+                      ?actor crm:P14i_performed|^crm:P14_carried_out_by ?creation.
+                      ?actor a crm:E39_Actor.
+                      OPTIONAL {
+                        ?creation crm:P82_at_some_time_within ?date.
+                      }
+                    }
+                    OPTIONAL {
+                      ?expression lrm:R4i_is_embodied_in ?manifestation.
+                      ?itemProduction lrm:R27_materialized ?manifestation;
+                      OPTIONAL {
+                        ?itemProduction crm:P4_has_time-span ?dateNode.
+                      }
+                        
+                    }
                   }
               "
               ></ontodia>
